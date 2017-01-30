@@ -20,9 +20,15 @@ export default class UploadPage extends Component {
             'under-nav-items'
         ];
 
+        this.settings = [
+            'between-n-posts'
+        ];
 
         // bind the values of the fields and checkboxes to the getter/setter functions
         this.positions.forEach(key =>
+            this.values[key] = m.prop(settings[this.addPrefix(key)])
+        );
+        this.settings.forEach(key =>
             this.values[key] = m.prop(settings[this.addPrefix(key)])
         );
     }
@@ -36,6 +42,16 @@ export default class UploadPage extends Component {
         return [
             m('div', {className: 'AdsPage'}, [
                 m('form', {onsubmit: this.onsubmit.bind(this)},
+
+                    m('fieldset', {className: 'AdsPage-settings'}, [
+                        m('legend', {}, app.translator.trans('flagrow-ads.admin.settings.between-n-posts')),
+                        m('input', {
+                            value: this.values['between-n-posts']() || 5,
+                            className: 'FormControl',
+                            oninput: m.withAttr('value', this.values['between-n-posts'])
+                        })
+                    ]),
+
                     this.positions.map(position => {
                         return m('fieldset', {className: 'AdsPage-' + position}, [
                             m('legend', {}, app.translator.trans('flagrow-ads.admin.positions.' + position + '.title')),
@@ -68,8 +84,8 @@ export default class UploadPage extends Component {
      */
     changed() {
         var positionsChecked = this.positions.some(key => this.values[key]() !== app.data.settings[this.addPrefix(key)]);
-        console.log(positionsChecked);
-        return positionsChecked;
+        var settingsChecked = this.settings.some(key => this.values[key]() !== app.data.settings[this.addPrefix(key)]);
+        return positionsChecked || settingsChecked;
     }
 
     /**
@@ -95,6 +111,7 @@ export default class UploadPage extends Component {
 
         // gets all the values from the form
         this.positions.forEach(key => settings[this.addPrefix(key)] = this.values[key]());
+        this.settings.forEach(key => settings[this.addPrefix(key)] = this.values[key]());
 
         // actually saves everything in the database
         saveSettings(settings)

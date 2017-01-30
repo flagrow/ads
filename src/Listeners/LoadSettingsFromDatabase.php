@@ -13,7 +13,8 @@ class LoadSettingsFromDatabase
     protected $addSettings = [
         'under-header',
         'between-posts',
-        'under-nav-items'
+        'under-nav-items',
+        'between-n-posts'
     ];
 
     /**

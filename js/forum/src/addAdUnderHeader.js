@@ -1,16 +1,27 @@
+import { extend } from 'flarum/extend';
+import HeaderPrimary from 'flarum/components/HeaderPrimary';
 
 export default function () {
-    const advertisement = app.forum.attribute('flagrow.ads.under-header');
+    extend(HeaderPrimary.prototype, 'config', (isInitialized, context) => {
 
-    if (advertisement) {
+        if (isInitialized) { return; }
 
-        var appElement = document.getElementsByClassName('App-content')[0];
+        if (document.getElementsByClassName('Flagrow-Ads-under-header').length) {
+            return;
+        }
 
-        var adsElement = document.createElement('div');
+        const advertisement = app.forum.attribute('flagrow.ads.under-header');
 
-        adsElement.className = 'Flagrow-Ads';
-        adsElement.innerHTML = advertisement;
+        if (advertisement) {
 
-        appElement.parentNode.insertBefore(adsElement, appElement);
-    }
+            var appElement = document.getElementsByClassName('App-content')[0];
+
+            var adsElement = document.createElement('div');
+
+            adsElement.className = 'Flagrow-Ads-under-header';
+            adsElement.innerHTML = advertisement;
+
+            appElement.parentNode.insertBefore(adsElement, appElement);
+        }
+    });
 }

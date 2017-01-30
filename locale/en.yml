@@ -10,5 +10,7 @@ flagrow-ads:
             under-nav-items:
                 title: Ad position in the left column under tags on frontpage
                 placeholder: => flagrow-ads.admin.positions.under-header.placeholder
+        settings:
+            between-n-posts: Specify after how many posts to place an ad
         tab:
             description: Set ads preferences and positions.

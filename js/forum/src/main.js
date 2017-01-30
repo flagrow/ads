@@ -1,12 +1,13 @@
-import { extend } from 'flarum/extend';
 import app from 'flarum/app';
 import addAdUnderHeader from 'flagrow/ads/addAdUnderHeader';
 import addAdUnderNavItems from 'flagrow/ads/addAdUnderNavItems';
-import HeaderPrimary from 'flarum/components/HeaderPrimary';
+import addAdBetweenPosts from 'flagrow/ads/addAdBetweenPosts';
+import AdPostType from 'flagrow/ads/components/AdPostType';
 
 app.initializers.add('flagrow-ads', function(app) {
-    extend(HeaderPrimary.prototype, 'items', items => {
-        addAdUnderHeader();
-    });
+    app.postComponents.adPostType = AdPostType;
+
+    addAdUnderHeader();
     addAdUnderNavItems();
+    addAdBetweenPosts();
 });

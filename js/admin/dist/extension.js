@@ -100,8 +100,13 @@ System.register("flagrow/ads/components/AdsPage", ["flarum/Component", "flarum/c
 
                         this.positions = ['under-header', 'between-posts', 'under-nav-items'];
 
+                        this.settings = ['between-n-posts'];
+
                         // bind the values of the fields and checkboxes to the getter/setter functions
                         this.positions.forEach(function (key) {
+                            return _this2.values[key] = m.prop(settings[_this2.addPrefix(key)]);
+                        });
+                        this.settings.forEach(function (key) {
                             return _this2.values[key] = m.prop(settings[_this2.addPrefix(key)]);
                         });
                     }
@@ -110,7 +115,11 @@ System.register("flagrow/ads/components/AdsPage", ["flarum/Component", "flarum/c
                     value: function view() {
                         var _this3 = this;
 
-                        return [m('div', { className: 'AdsPage' }, [m('form', { onsubmit: this.onsubmit.bind(this) }, this.positions.map(function (position) {
+                        return [m('div', { className: 'AdsPage' }, [m('form', { onsubmit: this.onsubmit.bind(this) }, m('fieldset', { className: 'AdsPage-settings' }, [m('legend', {}, app.translator.trans('flagrow-ads.admin.settings.between-n-posts')), m('input', {
+                            value: this.values['between-n-posts']() || 5,
+                            className: 'FormControl',
+                            oninput: m.withAttr('value', this.values['between-n-posts'])
+                        })]), this.positions.map(function (position) {
                             return m('fieldset', { className: 'AdsPage-' + position }, [m('legend', {}, app.translator.trans('flagrow-ads.admin.positions.' + position + '.title')), m('textarea', {
                                 value: _this3.values[position]() || null,
                                 className: 'FormControl',
@@ -133,8 +142,10 @@ System.register("flagrow/ads/components/AdsPage", ["flarum/Component", "flarum/c
                         var positionsChecked = this.positions.some(function (key) {
                             return _this4.values[key]() !== app.data.settings[_this4.addPrefix(key)];
                         });
-                        console.log(positionsChecked);
-                        return positionsChecked;
+                        var settingsChecked = this.settings.some(function (key) {
+                            return _this4.values[key]() !== app.data.settings[_this4.addPrefix(key)];
+                        });
+                        return positionsChecked || settingsChecked;
                     }
                 }, {
                     key: "onsubmit",
@@ -157,6 +168,9 @@ System.register("flagrow/ads/components/AdsPage", ["flarum/Component", "flarum/c
 
                         // gets all the values from the form
                         this.positions.forEach(function (key) {
+                            return settings[_this5.addPrefix(key)] = _this5.values[key]();
+                        });
+                        this.settings.forEach(function (key) {
                             return settings[_this5.addPrefix(key)] = _this5.values[key]();
                         });
 
