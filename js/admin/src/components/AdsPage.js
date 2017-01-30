@@ -16,7 +16,8 @@ export default class UploadPage extends Component {
 
         this.positions = [
             'under-header',
-            'between-posts'
+            'between-posts',
+            'under-nav-items'
         ];
 
 

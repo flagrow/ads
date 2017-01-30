@@ -7,5 +7,8 @@ flagrow-ads:
             between-posts:
                 title: Ad position between posts
                 placeholder: => flagrow-ads.admin.positions.under-header.placeholder
+            under-nav-items:
+                title: Ad position in the left column under tags on frontpage
+                placeholder: => flagrow-ads.admin.positions.under-header.placeholder
         tab:
             description: Set ads preferences and positions.
