@@ -1,4 +1,11 @@
 flagrow-ads:
     admin:
+        positions:
+            under-header:
+                title: Ad position under navigational header
+                placeholder: Insert your ad code here.
+            between-posts:
+                title: Ad position between posts
+                placeholder: => flagrow-ads.admin.positions.under-header.placeholder
         tab:
             description: Set ads preferences and positions.

@@ -62,10 +62,10 @@ System.register("flagrow/ads/main", ["flarum/extend", "flarum/app", "flagrow/ads
 });;
 "use strict";
 
-System.register("flagrow/ads/components/AdsPage", ["flarum/Component", "flarum/components/Button", "flarum/utils/saveSettings", "flarum/components/Alert", "flarum/components/Select", "flarum/components/Switch"], function (_export, _context) {
+System.register("flagrow/ads/components/AdsPage", ["flarum/Component", "flarum/components/Button", "flarum/utils/saveSettings", "flarum/components/Alert"], function (_export, _context) {
     "use strict";
 
-    var Component, Button, saveSettings, Alert, Select, Switch, UploadPage;
+    var Component, Button, saveSettings, Alert, UploadPage;
     return {
         setters: [function (_flarumComponent) {
             Component = _flarumComponent.default;
@@ -75,10 +75,6 @@ System.register("flagrow/ads/components/AdsPage", ["flarum/Component", "flarum/c
             saveSettings = _flarumUtilsSaveSettings.default;
         }, function (_flarumComponentsAlert) {
             Alert = _flarumComponentsAlert.default;
-        }, function (_flarumComponentsSelect) {
-            Select = _flarumComponentsSelect.default;
-        }, function (_flarumComponentsSwitch) {
-            Switch = _flarumComponentsSwitch.default;
         }],
         execute: function () {
             UploadPage = function (_Component) {
@@ -91,17 +87,96 @@ System.register("flagrow/ads/components/AdsPage", ["flarum/Component", "flarum/c
 
                 babelHelpers.createClass(UploadPage, [{
                     key: "init",
-                    value: function init() {}
+                    value: function init() {
+                        var _this2 = this;
+
+                        // get the saved settings from the database
+                        var settings = app.data.settings;
+
+                        this.values = {};
+
+                        // our package prefix (to be added to every field and checkbox in the setting table)
+                        this.settingsPrefix = 'flagrow.ads';
+
+                        this.positions = ['under-header', 'between-posts'];
+
+                        // bind the values of the fields and checkboxes to the getter/setter functions
+                        this.positions.forEach(function (key) {
+                            return _this2.values[key] = m.prop(settings[_this2.addPrefix(key)]);
+                        });
+                    }
                 }, {
                     key: "view",
                     value: function view() {
-                        return [];
+                        var _this3 = this;
+
+                        return [m('div', { className: 'AdsPage' }, [m('form', { onsubmit: this.onsubmit.bind(this) }, this.positions.map(function (position) {
+                            return m('fieldset', { className: 'AdsPage-' + position }, [m('legend', {}, app.translator.trans('flagrow-ads.admin.positions.' + position + '.title')), m('textarea', {
+                                value: _this3.values[position]() || null,
+                                className: 'FormControl',
+                                placeholder: app.translator.trans('flagrow-ads.admin.positions.' + position + '.placeholder'),
+                                oninput: m.withAttr('value', _this3.values[position])
+                            })]);
+                        }), Button.component({
+                            type: 'submit',
+                            className: 'Button Button--primary',
+                            children: app.translator.trans('flagrow-upload.admin.buttons.save'),
+                            loading: this.loading,
+                            disabled: !this.changed()
+                        }))])];
+                    }
+                }, {
+                    key: "changed",
+                    value: function changed() {
+                        var _this4 = this;
+
+                        var positionsChecked = this.positions.some(function (key) {
+                            return _this4.values[key]() !== app.data.settings[_this4.addPrefix(key)];
+                        });
+                        console.log(positionsChecked);
+                        return positionsChecked;
                     }
                 }, {
                     key: "onsubmit",
                     value: function onsubmit(e) {
+                        var _this5 = this;
+
                         // prevent the usual form submit behaviour
                         e.preventDefault();
+
+                        // if the page is already saving, do nothing
+                        if (this.loading) return;
+
+                        // prevents multiple savings
+                        this.loading = true;
+
+                        // remove previous success popup
+                        app.alerts.dismiss(this.successAlert);
+
+                        var settings = {};
+
+                        // gets all the values from the form
+                        this.positions.forEach(function (key) {
+                            return settings[_this5.addPrefix(key)] = _this5.values[key]();
+                        });
+
+                        // actually saves everything in the database
+                        saveSettings(settings).then(function () {
+                            // on success, show popup
+                            app.alerts.show(_this5.successAlert = new Alert({
+                                type: 'success',
+                                children: app.translator.trans('core.admin.basics.saved_message')
+                            }));
+                        }).catch(function () {}).then(function () {
+                            // return to the initial state and redraw the page
+                            _this5.loading = false;
+                            m.redraw();
+                        });
+                    }
+                }, {
+                    key: "addPrefix",
+                    value: function addPrefix(key) {
+                        return this.settingsPrefix + '.' + key;
                     }
                 }]);
                 return UploadPage;

@@ -1,10 +1,16 @@
 
 export default function () {
-    var appElement = document.getElementsByClassName('App-content')[0];
+    const advertisement = app.forum.attribute('flagrow.ads.under-header');
 
-    var adsElement = document.createElement('div');
+    if (advertisement) {
 
-    adsElement.className = 'Flagrow-Ads';
+        var appElement = document.getElementsByClassName('App-content')[0];
 
-    appElement.parentNode.insertBefore(adsElement, appElement);
+        var adsElement = document.createElement('div');
+
+        adsElement.className = 'Flagrow-Ads';
+        adsElement.innerHTML = advertisement;
+
+        appElement.parentNode.insertBefore(adsElement, appElement);
+    }
 }
