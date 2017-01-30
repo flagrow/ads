@@ -1,0 +1,4 @@
+flagrow-ads:
+    admin:
+        tab:
+            description: Set ads preferences and positions.
