@@ -1,5 +1,7 @@
 flagrow-ads:
     admin:
+        buttons:
+            save: Save settings
         positions:
             under-header:
                 title: Ad position under navigational header

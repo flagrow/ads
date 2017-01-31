@@ -1,31 +1,68 @@
 'use strict';
 
-System.register('flagrow/ads/main', ['flarum/app', 'flagrow/ads/addAdUnderHeader', 'flagrow/ads/addAdUnderNavItems', 'flagrow/ads/addAdBetweenPosts', 'flagrow/ads/components/AdPostType'], function (_export, _context) {
+System.register('flagrow/ads/addAdBetweenPosts', ['flarum/extend', 'flarum/app', 'flarum/components/PostStream'], function (_export, _context) {
     "use strict";
 
-    var app, addAdUnderHeader, addAdUnderNavItems, addAdBetweenPosts, AdPostType;
+    var extend, app, PostStream;
+
+    _export('default', function () {
+        extend(PostStream.prototype, 'posts', function (posts) {
+            var advertisement = app.forum.attribute('flagrow.ads.between-posts');
+
+            if (posts.length && advertisement) {
+                var pointers, internal;
+
+                (function () {
+                    var between = parseInt(app.forum.attribute('flagrow.ads.between-n-posts') || 5);
+
+                    pointers = [];
+                    internal = 0;
+
+
+                    posts.forEach(function (post) {
+                        if (post && post.number() && post.contentType() == 'comment') {
+                            internal++;
+
+                            if (internal === between) {
+                                pointers.push(post.number());
+                                internal = 0;
+                            }
+                        }
+                    });
+
+                    pointers.forEach(function (number) {
+                        posts.splice(number, 0, app.store.createRecord('posts', { attributes: {
+                                contentHtml: advertisement,
+                                time: new Date(),
+                                contentType: 'ad',
+                                canReply: false,
+                                canFlag: false,
+                                canLike: false,
+                                canDelete: false,
+                                canApprove: false,
+                                canEdit: false,
+                                isApproved: true,
+                                number: number + 1
+                            } }));
+                    });
+
+                    posts.sort(function (a, b) {
+                        return a.number() - b.number();
+                    });
+                })();
+            }
+        });
+    });
+
     return {
-        setters: [function (_flarumApp) {
+        setters: [function (_flarumExtend) {
+            extend = _flarumExtend.extend;
+        }, function (_flarumApp) {
             app = _flarumApp.default;
-        }, function (_flagrowAdsAddAdUnderHeader) {
-            addAdUnderHeader = _flagrowAdsAddAdUnderHeader.default;
-        }, function (_flagrowAdsAddAdUnderNavItems) {
-            addAdUnderNavItems = _flagrowAdsAddAdUnderNavItems.default;
-        }, function (_flagrowAdsAddAdBetweenPosts) {
-            addAdBetweenPosts = _flagrowAdsAddAdBetweenPosts.default;
-        }, function (_flagrowAdsComponentsAdPostType) {
-            AdPostType = _flagrowAdsComponentsAdPostType.default;
+        }, function (_flarumComponentsPostStream) {
+            PostStream = _flarumComponentsPostStream.default;
         }],
-        execute: function () {
-
-            app.initializers.add('flagrow-ads', function (app) {
-                app.postComponents.adPostType = AdPostType;
-
-                addAdUnderHeader();
-                addAdUnderNavItems();
-                addAdBetweenPosts();
-            });
-        }
+        execute: function () {}
     };
 });;
 'use strict';
@@ -100,62 +137,6 @@ System.register('flagrow/ads/addAdUnderNavItems', ['flarum/extend', 'flarum/comp
         execute: function () {}
     };
 });;
-'use strict';
-
-System.register('flagrow/ads/addAdBetweenPosts', ['flarum/extend', 'flarum/app', 'flarum/components/PostStream'], function (_export, _context) {
-    "use strict";
-
-    var extend, app, PostStream;
-
-    _export('default', function () {
-        extend(PostStream.prototype, 'posts', function (posts) {
-            var advertisement = app.forum.attribute('flagrow.ads.between-posts');
-            var between = parseInt(app.forum.attribute('flagrow.ads.between-n-posts') || 5);
-            if (posts.length && advertisement) {
-
-                var pointers = [];
-                posts.forEach(function (post) {
-                    if (post.number() % between === 0) {
-                        pointers.push(post.number());
-                    }
-                });
-
-                pointers.forEach(function (number) {
-                    posts.splice(number, 0, app.store.createRecord('posts', { attributes: {
-                            contentHtml: advertisement,
-                            time: new Date(),
-                            contentType: 'adPostType',
-                            canReply: false,
-                            canFlag: false,
-                            canLike: true,
-                            canDelete: false,
-                            canApprove: false,
-                            canEdit: false,
-                            isApproved: true,
-                            number: number + 1
-                        } }));
-                });
-
-                posts.sort(function (a, b) {
-                    return a.number() > b.number();
-                });
-
-                console.log(posts);
-            }
-        });
-    });
-
-    return {
-        setters: [function (_flarumExtend) {
-            extend = _flarumExtend.extend;
-        }, function (_flarumApp) {
-            app = _flarumApp.default;
-        }, function (_flarumComponentsPostStream) {
-            PostStream = _flarumComponentsPostStream.default;
-        }],
-        execute: function () {}
-    };
-});;
 "use strict";
 
 System.register("flagrow/ads/components/AdPostType", ["flarum/components/EventPost", "flagrow/byobu/helpers/recipientsLabel"], function (_export, _context) {
@@ -194,6 +175,36 @@ System.register("flagrow/ads/components/AdPostType", ["flarum/components/EventPo
             }(EventPost);
 
             _export("default", AdPostType);
+        }
+    };
+});;
+'use strict';
+
+System.register('flagrow/ads/main', ['flarum/app', 'flagrow/ads/addAdUnderHeader', 'flagrow/ads/addAdUnderNavItems', 'flagrow/ads/addAdBetweenPosts', 'flagrow/ads/components/AdPostType'], function (_export, _context) {
+    "use strict";
+
+    var app, addAdUnderHeader, addAdUnderNavItems, addAdBetweenPosts, AdPostType;
+    return {
+        setters: [function (_flarumApp) {
+            app = _flarumApp.default;
+        }, function (_flagrowAdsAddAdUnderHeader) {
+            addAdUnderHeader = _flagrowAdsAddAdUnderHeader.default;
+        }, function (_flagrowAdsAddAdUnderNavItems) {
+            addAdUnderNavItems = _flagrowAdsAddAdUnderNavItems.default;
+        }, function (_flagrowAdsAddAdBetweenPosts) {
+            addAdBetweenPosts = _flagrowAdsAddAdBetweenPosts.default;
+        }, function (_flagrowAdsComponentsAdPostType) {
+            AdPostType = _flagrowAdsComponentsAdPostType.default;
+        }],
+        execute: function () {
+
+            app.initializers.add('flagrow-ads', function (app) {
+                app.postComponents.ad = AdPostType;
+
+                addAdUnderHeader();
+                addAdUnderNavItems();
+                addAdBetweenPosts();
+            });
         }
     };
 });

@@ -39,29 +39,6 @@ System.register("flagrow/ads/addAdsPane", ["flarum/extend", "flarum/components/A
 });;
 "use strict";
 
-System.register("flagrow/ads/main", ["flarum/extend", "flarum/app", "flagrow/ads/addAdsPane"], function (_export, _context) {
-    "use strict";
-
-    var extend, app, addAdsPane;
-    return {
-        setters: [function (_flarumExtend) {
-            extend = _flarumExtend.extend;
-        }, function (_flarumApp) {
-            app = _flarumApp.default;
-        }, function (_flagrowAdsAddAdsPane) {
-            addAdsPane = _flagrowAdsAddAdsPane.default;
-        }],
-        execute: function () {
-
-            app.initializers.add('flagrow-ads', function (app) {
-                // add the admin pane
-                addAdsPane();
-            });
-        }
-    };
-});;
-"use strict";
-
 System.register("flagrow/ads/components/AdsPage", ["flarum/Component", "flarum/components/Button", "flarum/utils/saveSettings", "flarum/components/Alert"], function (_export, _context) {
     "use strict";
 
@@ -129,7 +106,7 @@ System.register("flagrow/ads/components/AdsPage", ["flarum/Component", "flarum/c
                         }), Button.component({
                             type: 'submit',
                             className: 'Button Button--primary',
-                            children: app.translator.trans('flagrow-upload.admin.buttons.save'),
+                            children: app.translator.trans('flagrow-ads.admin.buttons.save'),
                             loading: this.loading,
                             disabled: !this.changed()
                         }))])];
@@ -197,6 +174,29 @@ System.register("flagrow/ads/components/AdsPage", ["flarum/Component", "flarum/c
             }(Component);
 
             _export("default", UploadPage);
+        }
+    };
+});;
+"use strict";
+
+System.register("flagrow/ads/main", ["flarum/extend", "flarum/app", "flagrow/ads/addAdsPane"], function (_export, _context) {
+    "use strict";
+
+    var extend, app, addAdsPane;
+    return {
+        setters: [function (_flarumExtend) {
+            extend = _flarumExtend.extend;
+        }, function (_flarumApp) {
+            app = _flarumApp.default;
+        }, function (_flagrowAdsAddAdsPane) {
+            addAdsPane = _flagrowAdsAddAdsPane.default;
+        }],
+        execute: function () {
+
+            app.initializers.add('flagrow-ads', function (app) {
+                // add the admin pane
+                addAdsPane();
+            });
         }
     };
 });

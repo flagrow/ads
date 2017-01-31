@@ -67,7 +67,7 @@ export default class UploadPage extends Component {
                     Button.component({
                         type: 'submit',
                         className: 'Button Button--primary',
-                        children: app.translator.trans('flagrow-upload.admin.buttons.save'),
+                        children: app.translator.trans('flagrow-ads.admin.buttons.save'),
                         loading: this.loading,
                         disabled: !this.changed()
                     }),
