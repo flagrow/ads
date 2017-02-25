@@ -6,101 +6,26 @@ System.register('flagrow/ads/addAdBetweenPosts', ['flarum/extend', 'flarum/app',
     var extend, app, PostStream;
 
     _export('default', function () {
-        extend(PostStream.prototype, 'posts', function (posts) {
+        extend(PostStream.prototype, 'view', function (component) {
             var advertisement = app.forum.attribute('flagrow.ads.between-posts');
 
-            if (posts.length && advertisement) {
-                var pointers, internal;
-                var offset;
-
+            if (advertisement && component.children.length) {
                 (function () {
                     var between = parseInt(app.forum.attribute('flagrow.ads.between-n-posts') || 5);
-
-                    pointers = [];
-                    internal = 0;
-
-
-                    posts.forEach(function (post, i) {
-                        if (i > 0 && i < posts.length && post && post.number() && post.contentType() == 'comment') {
-                            internal++;
-
-                            if (internal === between) {
-                                pointers.push(i);
-                                internal = 0;
-                            }
-                        }
+                    // We need to copy all comments first, otherwise there is no way to detect and jump the last comment
+                    var commentPosts = component.children.filter(function (post) {
+                        return post.attrs['data-type'] == 'comment';
                     });
 
-                    offset = 0;
-
-                    pointers.forEach(function (number) {
-
-                        var index = number + offset;
-
-                        posts.splice(index, 0, app.store.createRecord('posts', { attributes: {
-                                contentHtml: advertisement,
-                                time: new Date(),
-                                contentType: 'ad',
-                                canReply: false,
-                                canFlag: false,
-                                canLike: false,
-                                canDelete: false,
-                                canApprove: false,
-                                canEdit: false,
-                                isApproved: true,
-                                number: index
-                            } }));
-
-                        offset++;
+                    // Insert an inside every n comment
+                    commentPosts.forEach(function (post, i) {
+                        if (i > 0 && (i + 1) % between === 0 && i < commentPosts.length - 1) {
+                            post.children.push(m('div.Flagrow-Ads-fake-poststream-item', m('article.Post.EventPost', m('div.Flagrow-Ads-between-posts.EventPost-info', m.trust(advertisement)))));
+                        }
                     });
                 })();
             }
         });
-        //
-        // extend(PostStream.prototype, 'view', function(component) {
-        //     const advertisement = app.forum.attribute('flagrow.ads.between-posts');
-        //     const between = parseInt(app.forum.attribute('flagrow.ads.between-n-posts') || 5);
-        //
-        //     if (advertisement && component.children.length) {
-        //         var pointers = [],
-        //             internal = 0;
-        //
-        //         component.children.forEach((post, i) => {
-        //             if (i > 0 && post.attrs['data-type'] == 'comment' && i != component.children.length) {
-        //                 internal++;
-        //
-        //                 if (internal >= between) {
-        //                     pointers.push(i);
-        //                     internal = 0;
-        //                 }
-        //             }
-        //         });
-        //
-        //         if (pointers.length) {
-        //             // FiPo is the First Post.
-        //             var FiPo = component.children[0];
-        //             FiPo.children = [m('article', {className: 'Post EventPost AdPost'}, [
-        //                 m('div', {className: 'Flagrow-Ads-between-posts EventPost-info'}, [
-        //                     m.trust(advertisement)
-        //                 ])
-        //             ])];
-        //             FiPo.attrs['data-type'] = 'ad';
-        //             FiPo.attrs['data-id'] = null;
-        //
-        //             internal = 0;
-        //
-        //             pointers.forEach(index => {
-        //                 // Increment the index to offset for already added ads.
-        //                 var index = index + internal;
-        //                 FiPo.attrs['data-index'] = index;
-        //                 FiPo.attrs['data-number'] = index;
-        //                 console.log(index, internal, FiPo.attrs);
-        //                 component.children.splice(index, 0, FiPo);
-        //                 internal++;
-        //             });
-        //         }
-        //     }
-        // });
     });
 
     return {
