@@ -23,6 +23,7 @@ class AddClientAssets
         if ($app->isForum()) {
             $app->addAssets([
                 __DIR__.'/../../js/forum/dist/extension.js',
+                __DIR__.'/../../less/forum/adsBetweenPosts.less'
             ]);
             $app->addBootstrapper('flagrow/ads/main');
         }
