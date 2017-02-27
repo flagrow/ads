@@ -1,7 +1,7 @@
 - 0.1.0-beta.3
-  - Fixes in-between-posts
-  - Adds Polish
+  - Fixes in-between-posts.
+  - Adds Polish locale.
 - 0.1.0-beta.1 & 0.1.0-beta.2
   - First version.
-  - Ads on frontpage under tags menu
-  - Ads on frontpage under top menu
+  - Ads on frontpage under tags menu.
+  - Ads on frontpage under top menu.
