@@ -1,0 +1,19 @@
+flagrow-ads:
+    admin:
+        buttons:
+            save: Зберегти
+        positions:
+            under-header:
+                title: Позиція реклами під заголовком навігації
+                placeholder: Введіть свій рекламний код.
+            between-posts:
+                title: Позиція реклами між повідомленнями
+                placeholder: => flagrow-ads.admin.positions.under-header.placeholder
+            under-nav-items:
+                title: Позиція реклами в лівій колонці під тегами на головній сторінці
+                placeholder: => flagrow-ads.admin.positions.under-header.placeholder
+        settings:
+            start-from-post: Визначте, з якого повідомлення починати показувати оголошення
+            between-n-posts: Визначте, через скільки повідомленнь показувати оголошення
+        tab:
+            description: Налаштування коду та розташування реклами.
