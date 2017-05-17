@@ -11,6 +11,7 @@ System.register('flagrow/ads/addAdBetweenPosts', ['flarum/extend', 'flarum/app',
 
             if (advertisement && component.children.length) {
                 (function () {
+                    var start = parseInt(app.forum.attribute('flagrow.ads.start-from-post') || 1);
                     var between = parseInt(app.forum.attribute('flagrow.ads.between-n-posts') || 5);
                     // We need to copy all comments first, otherwise there is no way to detect and jump the last comment
                     var commentPosts = component.children.filter(function (post) {
@@ -19,7 +20,7 @@ System.register('flagrow/ads/addAdBetweenPosts', ['flarum/extend', 'flarum/app',
 
                     // Insert an inside every n comment
                     commentPosts.forEach(function (post, i) {
-                        if (i > 0 && (i + 1) % between === 0 && i < commentPosts.length - 1) {
+                        if (i >= start && (i - start) % between === 0 && i < commentPosts.length - 1) {
                             post.children.push(m('div.Flagrow-Ads-fake-poststream-item', m('article.Post.EventPost', m('div.Flagrow-Ads-between-posts.EventPost-info', m.trust(advertisement)))));
                         }
                     });

@@ -21,6 +21,7 @@ export default class UploadPage extends Component {
         ];
 
         this.settings = [
+    	    'start-from-post',
             'between-n-posts'
         ];
 
@@ -42,6 +43,15 @@ export default class UploadPage extends Component {
         return [
             m('div', {className: 'AdsPage'}, [
                 m('form', {onsubmit: this.onsubmit.bind(this)},
+
+                    m('fieldset', {className: 'AdsPage-settings'}, [
+                        m('legend', {}, app.translator.trans('flagrow-ads.admin.settings.start-from-post')),
+                        m('input', {
+                            value: this.values['start-from-post']() || 1,
+                            className: 'FormControl',
+                            oninput: m.withAttr('value', this.values['start-from-post'])
+                        })
+                    ]),
 
                     m('fieldset', {className: 'AdsPage-settings'}, [
                         m('legend', {}, app.translator.trans('flagrow-ads.admin.settings.between-n-posts')),

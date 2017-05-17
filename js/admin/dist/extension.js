@@ -77,7 +77,7 @@ System.register("flagrow/ads/components/AdsPage", ["flarum/Component", "flarum/c
 
                         this.positions = ['under-header', 'between-posts', 'under-nav-items'];
 
-                        this.settings = ['between-n-posts'];
+                        this.settings = ['start-from-post', 'between-n-posts'];
 
                         // bind the values of the fields and checkboxes to the getter/setter functions
                         this.positions.forEach(function (key) {
@@ -92,7 +92,11 @@ System.register("flagrow/ads/components/AdsPage", ["flarum/Component", "flarum/c
                     value: function view() {
                         var _this3 = this;
 
-                        return [m('div', { className: 'AdsPage' }, [m('form', { onsubmit: this.onsubmit.bind(this) }, m('fieldset', { className: 'AdsPage-settings' }, [m('legend', {}, app.translator.trans('flagrow-ads.admin.settings.between-n-posts')), m('input', {
+                        return [m('div', { className: 'AdsPage' }, [m('form', { onsubmit: this.onsubmit.bind(this) }, m('fieldset', { className: 'AdsPage-settings' }, [m('legend', {}, app.translator.trans('flagrow-ads.admin.settings.start-from-post')), m('input', {
+                            value: this.values['start-from-post']() || 1,
+                            className: 'FormControl',
+                            oninput: m.withAttr('value', this.values['start-from-post'])
+                        })]), m('fieldset', { className: 'AdsPage-settings' }, [m('legend', {}, app.translator.trans('flagrow-ads.admin.settings.between-n-posts')), m('input', {
                             value: this.values['between-n-posts']() || 5,
                             className: 'FormControl',
                             oninput: m.withAttr('value', this.values['between-n-posts'])

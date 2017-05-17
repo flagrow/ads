@@ -14,7 +14,8 @@ class LoadSettingsFromDatabase
         'under-header',
         'between-posts',
         'under-nav-items',
-        'between-n-posts'
+        'between-n-posts',
+        'start-from-post',
     ];
 
     /**
