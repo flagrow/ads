@@ -1,3 +1,7 @@
+- 0.1.0-beta.4
+  - Allow on beta 7 and up.
+  - Spanish, Ukranian translation.
+  - Ability to set initial post to start ads from.
 - 0.1.0-beta.3
   - Fixes in-between-posts.
   - Adds Polish locale.
