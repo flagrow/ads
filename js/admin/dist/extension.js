@@ -75,7 +75,7 @@ System.register("flagrow/ads/components/AdsPage", ["flarum/Component", "flarum/c
                         // our package prefix (to be added to every field and checkbox in the setting table)
                         this.settingsPrefix = 'flagrow.ads';
 
-                        this.positions = ['under-header', 'between-posts', 'under-nav-items'];
+                        this.positions = ['under-header', 'between-posts', 'under-nav-items', 'under-reply-box'];
 
                         this.settings = ['start-from-post', 'between-n-posts'];
 

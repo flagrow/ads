@@ -10,21 +10,19 @@ System.register('flagrow/ads/addAdBetweenPosts', ['flarum/extend', 'flarum/app',
             var advertisement = app.forum.attribute('flagrow.ads.between-posts');
 
             if (advertisement && component.children.length) {
-                (function () {
-                    var start = parseInt(app.forum.attribute('flagrow.ads.start-from-post') || 1);
-                    var between = parseInt(app.forum.attribute('flagrow.ads.between-n-posts') || 5);
-                    // We need to copy all comments first, otherwise there is no way to detect and jump the last comment
-                    var commentPosts = component.children.filter(function (post) {
-                        return post.attrs['data-type'] == 'comment';
-                    });
+                var start = parseInt(app.forum.attribute('flagrow.ads.start-from-post') || 1);
+                var between = parseInt(app.forum.attribute('flagrow.ads.between-n-posts') || 5);
+                // We need to copy all comments first, otherwise there is no way to detect and jump the last comment
+                var commentPosts = component.children.filter(function (post) {
+                    return post.attrs['data-type'] == 'comment';
+                });
 
-                    // Insert an inside every n comment
-                    commentPosts.forEach(function (post, i) {
-                        if (i >= start && (i - start) % between === 0 && i < commentPosts.length - 1) {
-                            post.children.push(m('div.Flagrow-Ads-fake-poststream-item', m('article.Post.EventPost', m('div.Flagrow-Ads-between-posts.EventPost-info', m.trust(advertisement)))));
-                        }
-                    });
-                })();
+                // Insert an inside every n comment
+                commentPosts.forEach(function (post, i) {
+                    if (i >= start && (i - start) % between === 0 && i < commentPosts.length - 1) {
+                        post.children.push(m('div.Flagrow-Ads-fake-poststream-item', m('article.Post.EventPost', m('div.Flagrow-Ads-between-posts.EventPost-info', m.trust(advertisement)))));
+                    }
+                });
             }
         });
     });
@@ -112,6 +110,33 @@ System.register('flagrow/ads/addAdUnderNavItems', ['flarum/extend', 'flarum/comp
         execute: function () {}
     };
 });;
+'use strict';
+
+System.register('flagrow/ads/addAdUnderReplyBox', ['flarum/extend', 'flarum/components/PostStream'], function (_export, _context) {
+    "use strict";
+
+    var extend, PostStream;
+
+    _export('default', function () {
+        extend(PostStream.prototype, 'view', function (view) {
+
+            var advertisement = app.forum.attribute('flagrow.ads.under-reply-box');
+
+            if (advertisement) {
+                view.children.push(m('div.Flagrow-Ads-under-reply-box.Post', m.trust(advertisement)));
+            }
+        });
+    });
+
+    return {
+        setters: [function (_flarumExtend) {
+            extend = _flarumExtend.extend;
+        }, function (_flarumComponentsPostStream) {
+            PostStream = _flarumComponentsPostStream.default;
+        }],
+        execute: function () {}
+    };
+});;
 "use strict";
 
 System.register("flagrow/ads/components/AdPostType", ["flarum/components/EventPost", "flagrow/byobu/helpers/recipientsLabel"], function (_export, _context) {
@@ -155,10 +180,10 @@ System.register("flagrow/ads/components/AdPostType", ["flarum/components/EventPo
 });;
 'use strict';
 
-System.register('flagrow/ads/main', ['flarum/app', 'flagrow/ads/addAdUnderHeader', 'flagrow/ads/addAdUnderNavItems', 'flagrow/ads/addAdBetweenPosts', 'flagrow/ads/components/AdPostType'], function (_export, _context) {
+System.register('flagrow/ads/main', ['flarum/app', 'flagrow/ads/addAdUnderHeader', 'flagrow/ads/addAdUnderNavItems', 'flagrow/ads/addAdBetweenPosts', 'flagrow/ads/components/AdPostType', 'flagrow/ads/addAdUnderReplyBox'], function (_export, _context) {
     "use strict";
 
-    var app, addAdUnderHeader, addAdUnderNavItems, addAdBetweenPosts, AdPostType;
+    var app, addAdUnderHeader, addAdUnderNavItems, addAdBetweenPosts, AdPostType, addAdUnderReplyBox;
     return {
         setters: [function (_flarumApp) {
             app = _flarumApp.default;
@@ -170,6 +195,8 @@ System.register('flagrow/ads/main', ['flarum/app', 'flagrow/ads/addAdUnderHeader
             addAdBetweenPosts = _flagrowAdsAddAdBetweenPosts.default;
         }, function (_flagrowAdsComponentsAdPostType) {
             AdPostType = _flagrowAdsComponentsAdPostType.default;
+        }, function (_flagrowAdsAddAdUnderReplyBox) {
+            addAdUnderReplyBox = _flagrowAdsAddAdUnderReplyBox.default;
         }],
         execute: function () {
 
@@ -179,6 +206,7 @@ System.register('flagrow/ads/main', ['flarum/app', 'flagrow/ads/addAdUnderHeader
                 addAdUnderHeader();
                 addAdUnderNavItems();
                 addAdBetweenPosts();
+                addAdUnderReplyBox();
             });
         }
     };
