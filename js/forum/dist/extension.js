@@ -123,7 +123,7 @@ System.register('flagrow/ads/addAdUnderReplyBox', ['flarum/extend', 'flarum/comp
             var advertisement = app.forum.attribute('flagrow.ads.under-reply-box');
 
             if (advertisement) {
-                view.children.push(m('div.Flagrow-Ads-under-reply-box.Post', m.trust(advertisement)));
+                view.children.push(m('div.Flagrow-Ads-under-reply-box', m.trust(advertisement)));
             }
         });
     });
