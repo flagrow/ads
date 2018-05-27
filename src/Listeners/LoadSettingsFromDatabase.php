@@ -16,6 +16,7 @@ class LoadSettingsFromDatabase
         'under-nav-items',
         'between-n-posts',
         'start-from-post',
+        'under-reply-box',
     ];
 
     /**
@@ -47,10 +48,9 @@ class LoadSettingsFromDatabase
     public function prepareApiAttributes(PrepareApiAttributes $event)
     {
         if ($event->isSerializer(ForumSerializer::class)) {
-
             $additionalSettings = [];
 
-            foreach($this->addSettings as $key) {
+            foreach ($this->addSettings as $key) {
                 $additionalSettings[$this->prefix($key)] = $this->settings->get($this->prefix($key));
             }
 
