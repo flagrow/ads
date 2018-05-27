@@ -23,7 +23,8 @@ class AddClientAssets
         if ($app->isForum()) {
             $app->addAssets([
                 __DIR__.'/../../js/forum/dist/extension.js',
-                __DIR__.'/../../less/forum/adsBetweenPosts.less'
+                __DIR__.'/../../less/forum/adsBetweenPosts.less',
+                __DIR__.'/../../less/forum/adsUnderReplyBox.less',
             ]);
             $app->addBootstrapper('flagrow/ads/main');
         }
@@ -31,7 +32,7 @@ class AddClientAssets
         if ($app->isAdmin()) {
             $app->addAssets([
                 __DIR__ . '/../../js/admin/dist/extension.js',
-                __DIR__ . '/../../less/admin/adsPage.less'
+                __DIR__ . '/../../less/admin/adsPage.less',
             ]);
             $app->addBootstrapper('flagrow/ads/main');
         }

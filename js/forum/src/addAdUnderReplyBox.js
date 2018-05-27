@@ -8,7 +8,7 @@ export default function () {
 
         if (advertisement) {
             view.children.push(
-                m('div.Flagrow-Ads-under-reply-box.Post', m.trust(advertisement))
+                m('div.Flagrow-Ads-under-reply-box', m.trust(advertisement))
             );
         }
     });
