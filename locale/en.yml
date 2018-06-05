@@ -12,6 +12,9 @@ flagrow-ads:
             under-nav-items:
                 title: Ad position in the left column under tags on frontpage
                 placeholder: => flagrow-ads.admin.positions.under-header.placeholder
+            under-reply-box:
+                title: Ad position under reply composer
+                placeholder: Insert your ad code here.
         settings:
             start-from-post: Specify from which post to start to show an ad
             between-n-posts: Specify after how many posts to place an ad

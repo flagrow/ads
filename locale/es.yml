@@ -12,6 +12,9 @@ flagrow-ads:
             under-nav-items:
                 title: Posición del anuncio en la columna izquierda debajo de las etiquetas en la página principal
                 placeholder: => flagrow-ads.admin.positions.under-header.placeholder
+            under-reply-box:
+                title: Posición del anuncio en la debajo el compositor de respuestas
+                placeholder: Inserte el código de su anuncio aquí
         settings:
             between-n-posts: Especifique después de cuantos mensajes se publica el anuncio
         tab:

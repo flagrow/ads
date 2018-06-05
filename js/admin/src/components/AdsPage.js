@@ -17,7 +17,8 @@ export default class UploadPage extends Component {
         this.positions = [
             'under-header',
             'between-posts',
-            'under-nav-items'
+            'under-nav-items',
+            'under-reply-box'
         ];
 
         this.settings = [
