@@ -15,7 +15,6 @@ export default function() {
             // Insert an inside every n comment
             commentPosts.forEach((post, i) => {
                 if (i >= start && (i - start) % between === 0 && i < commentPosts.length - 1) {
-                    console.log('Adding advertisement');
                     post.children.push(
                         m('div.Flagrow-Ads-fake-poststream-item',
                             m('article.Post.EventPost',
