@@ -1,8 +1,8 @@
 import {extend} from "flarum/extend";
 import app from "flarum/app";
-import addAdsPane from "flagrow/ads/addAdsPane";
+import addAdsPane from "./addAdsPane";
 
-app.initializers.add('flagrow-ads', app => {
+app.initializers.add('flagrow-ads', () => {
     // add the admin pane
     addAdsPane();
 });

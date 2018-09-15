@@ -3,6 +3,7 @@
 
 namespace Flagrow\Ads\Listeners;
 
+use Flarum\Api\Event\Serializing;
 use Flarum\Api\Serializer\ForumSerializer;
 use Flarum\Event\PrepareApiAttributes;
 use Illuminate\Contracts\Events\Dispatcher;
@@ -35,19 +36,18 @@ class LoadSettingsFromDatabase
      */
     public function subscribe(Dispatcher $events)
     {
-        $events->listen(PrepareApiAttributes::class, [$this, 'prepareApiAttributes']);
+        $events->listen(Serializing::class, [$this, 'prepareApiAttributes']);
     }
 
     /**
      * Get the setting values from the database and make them available
      * in the forum.
      *
-     * @param PrepareApiAttributes $event
+     * @param Serializing $event
      */
-    public function prepareApiAttributes(PrepareApiAttributes $event)
+    public function prepareApiAttributes(Serializing $event)
     {
         if ($event->isSerializer(ForumSerializer::class)) {
-
             $additionalSettings = [];
 
             foreach($this->addSettings as $key) {
@@ -60,6 +60,6 @@ class LoadSettingsFromDatabase
 
     protected function prefix($key)
     {
-        return 'flagrow.ads.' . $key;
+        return "flagrow.ads.$key";
     }
 }

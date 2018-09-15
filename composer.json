@@ -32,7 +32,7 @@
         "flarum-extension": {
             "title": "Flagrow Ads",
             "icon": {
-                "name": "audio-description",
+                "name": "fas fa-audio-description",
                 "backgroundColor": "#f4f4f4",
                 "color": "#5f4bb6"
             }
