@@ -13,7 +13,7 @@ return [
         ->css(__DIR__ . '/less/forum.less')
         ->js(__DIR__.'/js/dist/forum.js'),
     new Extend\Locales(__DIR__.'/locale'),
-    function (Dispatcher $events) {
+    new Extend\Compat(function (Dispatcher $events) {
         $events->subscribe(Listeners\LoadSettingsFromDatabase::class);
-    }
+    })
 ];

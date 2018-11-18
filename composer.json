@@ -1,11 +1,9 @@
 {
     "name": "flagrow/ads",
-    "description": "Bombarding your users with ads everywhere, if you want..",
+    "description": "Bombarding your users with ads.",
     "keywords": [
-        "ads",
-        "flarum",
-        "flagrow",
-        "advertising"
+        "flarum", "flagrow",
+        "ads", "advertising"
     ],
     "type": "flarum-extension",
     "license": "MIT",
@@ -38,7 +36,7 @@
             }
         },
         "flagrow": {
-            "discuss": "https://discuss.flarum.org/d/4785-flagrow-ads-bombarding-your-users-with-ads-everywhere-if-you-want"
+            "discuss": "https://discuss.flarum.org/d/4785"
         }
     },
     "autoload": {
