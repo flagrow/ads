@@ -1,0 +1,19 @@
+flagrow-ads:
+    admin:
+        buttons:
+            save: Simpan Tetapan
+        positions:
+            under-header:
+                title: Iklan di bawah kepala navigasi
+                placeholder: Masukkan kod iklan anda di sini.
+            between-posts:
+                title: Iklan di antara pos
+                placeholder: => flagrow-ads.admin.positions.under-header.placeholder
+            under-nav-items:
+                title: Iklan di kolum kiri bawah tag di laman hadapan
+                placeholder: => flagrow-ads.admin.positions.under-header.placeholder
+        settings:
+            start-from-post: Tentukan dari pos mana untuk memulakan paparan iklan
+            between-n-posts: Tentukan selepas berapa pos untuk paparan iklan
+        tab:
+description: Tetapkan kedudukan dan keutamaan iklan.
