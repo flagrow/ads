@@ -16,4 +16,4 @@ flagrow-ads:
             start-from-post: Tentukan dari pos mana untuk memulakan paparan iklan
             between-n-posts: Tentukan selepas berapa pos untuk paparan iklan
         tab:
-description: Tetapkan kedudukan dan keutamaan iklan.
+            description: Tetapkan kedudukan dan keutamaan iklan.
