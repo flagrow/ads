@@ -1,19 +1,19 @@
 flagrow-ads:
-    admin:
-        buttons:
-            save: Save settings
-        positions:
-            under-header:
-                title: Ad position under navigational header
-                placeholder: Insert your ad code here.
-            between-posts:
-                title: Ad position between posts
-                placeholder: => flagrow-ads.admin.positions.under-header.placeholder
-            under-nav-items:
-                title: Ad position in the left column under tags on frontpage
-                placeholder: => flagrow-ads.admin.positions.under-header.placeholder
-        settings:
-            start-from-post: Specify from which post to start to show an ad
-            between-n-posts: Specify after how many posts to place an ad
-        tab:
-            description: Set ads preferences and positions.
+  admin:
+    buttons:
+      save: Save settings
+    positions:
+      between-posts:
+        placeholder: => flagrow-ads.admin.positions.under-header.placeholder
+        title: Ad position between posts
+      under-header:
+        placeholder: Insert your ad code here.
+        title: Ad position under navigational header
+      under-nav-items:
+        placeholder: => flagrow-ads.admin.positions.under-header.placeholder
+        title: Ad position in the left column under tags on frontpage
+    settings:
+      between-n-posts: Specify after how many posts to place an ad
+      start-from-post: Specify from which post to start to show an ad
+    tab:
+      description: Set ads preferences and positions.
