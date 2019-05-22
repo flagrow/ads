@@ -1,18 +1,19 @@
 flagrow-ads:
-    admin:
-        buttons:
-            save: Guardar configuración
-        positions:
-            under-header:
-                title: Posición del anuncio debajo del header de navegación
-                placeholder: Inserte el código de su anuncio aquí
-            between-posts:
-                title: Posición del anuncio entre mensajes
-                placeholder: => flagrow-ads.admin.positions.under-header.placeholder
-            under-nav-items:
-                title: Posición del anuncio en la columna izquierda debajo de las etiquetas en la página principal
-                placeholder: => flagrow-ads.admin.positions.under-header.placeholder
-        settings:
-            between-n-posts: Especifique después de cuantos mensajes se publica el anuncio
-        tab:
-            description: Establecer las preferencias y posicionamiento de los anuncios
+  admin:
+    buttons:
+      save: Guardar configuración
+    positions:
+      between-posts:
+        placeholder: => flagrow-ads.admin.positions.under-header.placeholder
+        title: Posición del anuncio entre mensajes
+      under-header:
+        placeholder: Inserte el código de su anuncio aquí
+        title: Posición del anuncio debajo del header de navegación
+      under-nav-items:
+        placeholder: => flagrow-ads.admin.positions.under-header.placeholder
+        title: Posición del anuncio en la columna izquierda debajo de las etiquetas en la página principal
+    settings:
+      between-n-posts: Especifique después de cuantos mensajes se publica el anuncio
+      start-from-post: Especifique desde qué mensajes para comenzar a mostrar un anuncio.
+    tab:
+      description: Establecer las preferencias y posicionamiento de los anuncios
