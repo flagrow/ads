@@ -14,5 +14,6 @@ flagrow-ads:
                 placeholder: => flagrow-ads.admin.positions.under-header.placeholder
         settings:
             between-n-posts: Especifique después de cuantos mensajes se publica el anuncio
+            start-from-post: Iniciar desde el post
         tab:
             description: Establecer las preferencias y posicionamiento de los anuncios
