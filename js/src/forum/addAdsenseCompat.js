@@ -13,14 +13,9 @@ export default function() {
 
                 if (!app.ads_index) {
                     app.ads_index = app.current.element.className
-                    console.log('start');
-                    console.log(app.ads_index);
                 } else if (app.ads_index !== app.current.element.className) {
                     app.ads_index = app.history.stack.length
-                    console.log('end');
-                    console.log(app.ads_index);
                     $(".adsbygoogle").each(function (i, e) {
-                        console.log('ran' + i);
                         $(e).html($(e).html())
                     });
                 }
