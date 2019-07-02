@@ -7,7 +7,7 @@ export default function() {
 
         const advertisement = app.forum.attribute('flagrow.ads.under-nav-items');
 
-        if (advertisement) {
+        if (advertisement && !(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)))  {
 
             // set priority higher to move up
             items.add('flagrow-ad', m.trust(advertisement), -100);
