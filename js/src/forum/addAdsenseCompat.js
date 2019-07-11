@@ -27,9 +27,9 @@ export default function() {
     extend(PostStream.prototype, 'config', function() {
         if ($(".adsbygoogle").length) {
 
-            if (this.discussion.ads_active !== true && app.previous !== undefined) {
+            if (app.cache[this.discussion.id() + 'ads_active'] !== true && app.previous !== undefined) {
                 (adsbygoogle = window.adsbygoogle || []).push({});
-                this.discussion.ads_active = true;
+                app.cache[this.discussion.id()+ 'ads_active'] = true;
             }
 
         }
