@@ -38,7 +38,7 @@ export default function() {
     extend(IndexPage.prototype, 'config', function() {
         if ($(".adsbygoogle").length) {
 
-            if (app.index_ad_active !== true) {
+            if (app.index_ad_active !== true && window.adsbygoogle.loaded !== true) {
                 (adsbygoogle = window.adsbygoogle || []).push({});
                 app.index_ad_active = true;
             }
